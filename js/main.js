@@ -24,3 +24,5 @@ function getRandomNumber(min, max){
 function checkLengthString(stroka, dlinna){
   return stroka.length <= dlinna;
 }
+getRandomNumber(1, 10);
+checkLengthString('Test', 4);
