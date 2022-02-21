@@ -17,12 +17,12 @@ function getRandomNumber(min, max){
 /**
  * Функция для проверки максимальной длины строки.
  *
- * @param {string} stroka Исходная строка для проверки.
- * @param {number} dlinna Целое число, максимальная длинна строки.
+ * @param {string} checkString Исходная строка для проверки.
+ * @param {number} maxStringLength Целое число, максимальная длинна строки.
  * @return {boolean} Возвращет true, если строка проходит по длине, и false — если не проходит.
  */
-function checkLengthString(stroka, dlinna){
-  return stroka.length <= dlinna;
+function checkLengthString(checkString, maxStringLength){
+  return checkString.length <= maxStringLength;
 }
 getRandomNumber(1, 10);
 checkLengthString('Test', 4);
