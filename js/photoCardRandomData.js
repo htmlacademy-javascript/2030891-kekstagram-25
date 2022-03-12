@@ -36,8 +36,6 @@ const DESCRIPTIONS = [
 
 const SIMILAR_PHOTO_COUNT = 25;
 
-
-
 const createComments = () => {
   const localId = uniqueIdentifierComment;
   uniqueIdentifierComment++;
