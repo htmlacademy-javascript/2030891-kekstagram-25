@@ -1,6 +1,5 @@
 import {similarPhotoCards} from './photoCardRandomData.js';
+import {createPhotoCard} from './createPhotoCard.js';
 
-// eslint-disable-next-line no-console
-console.log(
-  similarPhotoCards()
-);
+const cards = similarPhotoCards();
+createPhotoCard(cards);
