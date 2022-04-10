@@ -1,15 +1,15 @@
 import {showAlert} from './myFunctions.js';
 
 const getData = (onSuccess) => {
-  fetch('https://25.javascript.pages.academy/kekstagram/404')
+  fetch('https://25.javascript.pages.academy/kekstagram/data')
     .then((response) => {
       if (response.ok) {
         return response.json();
       }
       throw new Error;
     })
-    .then((posts) => {
-      onSuccess(posts);
+    .then((cards) => {
+      onSuccess(cards);
     })
     .catch(() => {
       showAlert('Что-то пошло не так, попробуйте позже...');
@@ -18,7 +18,7 @@ const getData = (onSuccess) => {
 
 const sendData = (onSuccess, onFail, body) => {
   fetch(
-    'https://25.javascript.pages.academy/kekstagram/404',
+    'https://25.javascript.pages.academy/kekstagram/',
     {
       method: 'POST',
       body

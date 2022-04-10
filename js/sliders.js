@@ -74,7 +74,7 @@ const SLIDER_EFFECT_OPTIONS = {
 
 function clearEffects() {
   sliderWrapper.classList.remove('active');
-  innerImage.className = 'effects effects__preview--none';
+  innerImage.className = 'effects__preview--none';
   innerImage.style.filter = '';
 }
 
@@ -127,4 +127,4 @@ function setActionOnButtonControl() {
   });
 }
 
-export {setActionOnButtonControl,initSlider,clearEffects,imagePreview};
+export {setActionOnButtonControl,initSlider,clearEffects};
