@@ -127,4 +127,4 @@ function setActionOnButtonControl() {
   });
 }
 
-export {setActionOnButtonControl,initSlider,clearEffects};
+export {setActionOnButtonControl,initSlider,clearEffects,imagePreview};
