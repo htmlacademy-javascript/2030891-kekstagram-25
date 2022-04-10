@@ -50,7 +50,7 @@ const createComments = () => {
 const createPhotoCard = () => {
   const localId = uniqueIdentifierPhotoCard;
   uniqueIdentifierPhotoCard++;
-  const similarComments = Array.from({length: getRandomNumber(1, 3)}, createComments);
+  const similarComments = Array.from({length: getRandomNumber(1, 15)}, createComments);
   return {
     id: localId,
     url: `photos/${localId}.jpg`,
