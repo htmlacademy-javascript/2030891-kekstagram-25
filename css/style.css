@@ -1416,3 +1416,13 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__error {
+  display: block;
+  color: #CC0000;
+  font-weight: bold;
+}
+
+.active {
+  display: block;
+}

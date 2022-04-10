@@ -1,4 +1,5 @@
 import {isEscapeKey} from './myFunctions.js';
+import {clearEffects} from './sliders.js';
 
 const uploadPhoto = document.querySelector('#upload-file');
 const overlayForm = document.querySelector('.img-upload__overlay');
@@ -23,6 +24,8 @@ function closeForm() {
   document.body.classList.remove('modal-open');
   uploadPhotoForm.reset();
   pristine.reset();
+  document.getElementById('effect-none').checked = true;
+  clearEffects();
 }
 
 function initPhotoFormOpenAndClose()
