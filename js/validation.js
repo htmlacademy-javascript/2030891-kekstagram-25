@@ -1,9 +1,21 @@
 import {isEscapeKey} from './myFunctions.js';
-import {clearEffects} from './sliders.js';
+import {clearEffects,imagePreview} from './sliders.js';
+import {sendData} from './api.js';
 
 const uploadPhoto = document.querySelector('#upload-file');
 const overlayForm = document.querySelector('.img-upload__overlay');
 const uploadPhotoForm = document.querySelector('#upload-select-image');
+const submitButton = uploadPhotoForm.querySelector('.img-upload__submit');
+
+const blockSubmitButton = () => {
+  submitButton.disabled = true;
+  submitButton.textContent = 'Загрузка...';
+};
+
+const unblockSubmitButton = () => {
+  submitButton.disabled = false;
+  submitButton.textContent = 'Опубликовать';
+};
 
 const pristine = new Pristine(uploadPhotoForm, {
   classTo: 'img-upload',
@@ -17,6 +29,7 @@ const pristine = new Pristine(uploadPhotoForm, {
 function openForm() {
   overlayForm.classList.remove('hidden');
   document.body.classList.add('modal-open');
+  document.querySelector('.img-upload__preview img').src = URL.createObjectURL(this.files[0]);
 }
 
 function closeForm() {
@@ -26,6 +39,7 @@ function closeForm() {
   pristine.reset();
   document.getElementById('effect-none').checked = true;
   clearEffects();
+  imagePreview.style.transform = '';
 }
 
 function initPhotoFormOpenAndClose()
@@ -117,13 +131,48 @@ function initPhotoFormValidation() {
     validateHashTags,
     getHashTagsErrorMessage
   );
+}
 
+function showInfoMessage(type) {
+  const message = document.querySelector(`#${type}`).content.querySelector(`.${type}`).cloneNode(true);
+  const messageWrapper = message.querySelector(`.${type}__inner`);
+  const button = messageWrapper.querySelector(`.${type}__button`);
+  button.addEventListener('click', () => {
+    message.remove();
+  });
+  document.addEventListener('keydown', (evt) => {
+    if (isEscapeKey(evt)) {
+      message.remove();
+    }
+  });
+  document.addEventListener('click', (evt) => {
+    const withinBoundaries = evt.composedPath().includes(messageWrapper);
+    if (!withinBoundaries) {
+      message.remove();
+    }
+  });
+  document.body.appendChild(message);
+}
+const initFormButtonSubmit = (onSuccess) => {
   uploadPhotoForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (pristine.validate()) {
-      uploadPhotoForm.submit();
+      blockSubmitButton();
+      sendData(
+        () => {
+          onSuccess();
+          unblockSubmitButton();
+          showInfoMessage('success');
+        },
+        () => {
+          unblockSubmitButton();
+          showInfoMessage('error');
+          closeForm();
+        },
+        new FormData(evt.target),
+      );
     }
   });
-}
+};
 
-export {initPhotoFormOpenAndClose, initPhotoFormValidation};
+export {initPhotoFormOpenAndClose,initPhotoFormValidation,initFormButtonSubmit,closeForm};

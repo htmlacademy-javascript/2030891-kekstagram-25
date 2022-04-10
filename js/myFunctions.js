@@ -15,4 +15,15 @@ const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {getRandomArrayElement, checkLengthString, getRandomNumber, isEscapeKey};
+const ALERT_SHOW_TIME = 5000;
+
+const showAlert = (message) => {
+  const alertContainer = document.querySelector('#alert-container').content.querySelector('.alert-container').cloneNode(true);
+  alertContainer.textContent = message;
+  document.body.appendChild(alertContainer);
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+export {getRandomArrayElement,checkLengthString,getRandomNumber,isEscapeKey,showAlert};
