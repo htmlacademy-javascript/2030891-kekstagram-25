@@ -1,3 +1,5 @@
+import {isEscapeKey} from './myFunctions.js';
+
 const cardPhotoModal = document.querySelector('.big-picture');
 const cardPhotoModalImage = cardPhotoModal.querySelector('.big-picture__img img');
 const closePhotoModal = document.querySelector('.big-picture__cancel');
@@ -46,7 +48,7 @@ function fillPhotoCardModal (card) {
     document.body.classList.remove('modal-open');
   });
   document.addEventListener('keydown', (evt) =>{
-    if(evt.key === 'Escape') {
+    if(isEscapeKey(evt)) {
       cardPhotoModal.classList.add('hidden');
       document.body.classList.remove('modal-open');
     }
