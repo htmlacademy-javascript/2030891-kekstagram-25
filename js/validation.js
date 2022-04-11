@@ -1,7 +1,8 @@
-import {isEscapeKey} from './myFunctions.js';
-import {clearEffects,imagePreview} from './sliders.js';
+import {isEscapeKey,checkLengthString} from './myFunctions.js';
+import {clearEffects} from './sliders.js';
 import {sendData} from './api.js';
 
+const imagePreview = document.querySelector('.img-upload__preview');
 const uploadPhoto = document.querySelector('#upload-file');
 const overlayForm = document.querySelector('.img-upload__overlay');
 const uploadPhotoForm = document.querySelector('#upload-select-image');
@@ -64,7 +65,7 @@ function initPhotoFormOpenAndClose()
 }
 
 function validateComment (value) {
-  return value.length <= 140;
+  return checkLengthString(value, 140);
 }
 
 function validateHashTags (value) {

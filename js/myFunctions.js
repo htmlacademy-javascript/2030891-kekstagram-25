@@ -1,7 +1,4 @@
 function getRandomNumber(min, max){
-  if(min < 0 || max < 0){
-    return -1;
-  }
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -16,7 +13,6 @@ const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const ALERT_SHOW_TIME = 5000;
-
 const showAlert = (message) => {
   const alertContainer = document.querySelector('#alert-container').content.querySelector('.alert-container').cloneNode(true);
   alertContainer.textContent = message;
@@ -26,4 +22,12 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomArrayElement,checkLengthString,getRandomNumber,isEscapeKey,showAlert};
+function debounce (callback, timeoutDelay = 500) {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+}
+
+export {getRandomArrayElement,checkLengthString,getRandomNumber,isEscapeKey,showAlert,debounce};
