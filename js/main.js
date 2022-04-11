@@ -1,6 +1,6 @@
 import {createPhotoCard} from './createPhotoCard.js';
 import {createBigPhotoModalFrame} from './openBigPhoto.js';
-import {initPhotoFormOpenAndClose,initPhotoFormValidation,initFormButtonSubmit,closeForm} from './validation.js';
+import {initPhotoFormOpenAndClose,initPhotoFormValidation,initFormButtonSubmit,onCloseForm} from './validation.js';
 import {setActionOnButtonControl,initSlider} from './sliders.js';
 import {getData} from './api.js';
 import {filterImages} from './imgFilters.js';
@@ -13,6 +13,6 @@ getData((cards) => {
 
 initPhotoFormValidation();
 initPhotoFormOpenAndClose();
-initFormButtonSubmit(closeForm);
+initFormButtonSubmit(onCloseForm);
 setActionOnButtonControl();
 initSlider();

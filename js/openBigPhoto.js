@@ -34,6 +34,10 @@ function resetBigPicture() {
   lastFilledComments = 0;
 }
 
+function onLoadMoreButtonClick() {
+  fillCommentsBlock();
+}
+
 function fillPhotoCardModal (card) {
   resetBigPicture();
   cardPhotoModalImage.src = card.url;
@@ -53,7 +57,7 @@ function fillPhotoCardModal (card) {
       document.body.classList.remove('modal-open');
     }
   });
-  commentsLoader.addEventListener('click', fillCommentsBlock);
+  commentsLoader.addEventListener('click', onLoadMoreButtonClick);
 }
 
 function createBigPhotoModalFrame(cards) {
