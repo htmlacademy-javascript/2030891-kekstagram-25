@@ -1,4 +1,4 @@
-import {isEscapeKey,checkLengthString} from './myFunctions.js';
+import {isEscapeKey,checkLengthString} from './my-functions.js';
 import {clearEffects} from './sliders.js';
 import {sendData} from './api.js';
 
