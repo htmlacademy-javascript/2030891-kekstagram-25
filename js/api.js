@@ -1,4 +1,4 @@
-import {showAlert} from './myFunctions.js';
+import {showAlert} from './my-functions.js';
 
 const getData = (onSuccess) => {
   fetch('https://25.javascript.pages.academy/kekstagram/data')
@@ -22,8 +22,7 @@ const sendData = (onSuccess, onFail, body) => {
     {
       method: 'POST',
       body
-    },
-  )
+    },)
     .then((response) => {
       if (response.ok) {
         onSuccess();

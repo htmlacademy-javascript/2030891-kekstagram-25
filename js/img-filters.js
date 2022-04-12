@@ -1,6 +1,6 @@
-import {createPhotoCard} from './createPhotoCard.js';
-import {createBigPhotoModalFrame} from './openBigPhoto.js';
-import {getRandomNumber,debounce} from './myFunctions.js';
+import {createPhotoCard} from './create-photo-card.js';
+import {createBigPhotoModalFrame} from './open-big-photo.js';
+import {getRandomNumber,debounce} from './my-functions.js';
 
 const RANDOM_PHOTO_CARDS_LIMIT = 10;
 
