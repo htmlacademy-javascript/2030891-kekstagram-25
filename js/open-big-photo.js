@@ -1,4 +1,4 @@
-import {isEscapeKey} from './myFunctions.js';
+import {isEscapeKey} from './my-functions.js';
 
 const cardPhotoModal = document.querySelector('.big-picture');
 const cardPhotoModalImage = cardPhotoModal.querySelector('.big-picture__img img');
