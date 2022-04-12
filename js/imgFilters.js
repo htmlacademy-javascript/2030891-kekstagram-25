@@ -2,6 +2,8 @@ import {createPhotoCard} from './createPhotoCard.js';
 import {createBigPhotoModalFrame} from './openBigPhoto.js';
 import {getRandomNumber,debounce} from './myFunctions.js';
 
+const RANDOM_PHOTO_CARDS_LIMIT = 10;
+
 const filterSection = document.querySelector('.img-filters');
 
 function getSort(a, b) {
@@ -18,23 +20,23 @@ function getRandomCards() {
   return getRandomNumber(-25, 25);
 }
 
+function fillSortedCards(cards) {
+  clearPhotoCard();
+  createPhotoCard(cards);
+  createBigPhotoModalFrame(cards);
+}
+
 function postSorting(cards, filter) {
   if (filter === 'filter-default') {
-    clearPhotoCard();
-    createPhotoCard(cards);
-    createBigPhotoModalFrame(cards);
+    fillSortedCards(cards);
   }
   else if (filter === 'filter-random') {
-    const randomizedCards = cards.slice().sort(getRandomCards).slice(0, 10);
-    clearPhotoCard();
-    createPhotoCard(randomizedCards);
-    createBigPhotoModalFrame(randomizedCards);
+    const randomizedCards = cards.slice().sort(getRandomCards).slice(0, RANDOM_PHOTO_CARDS_LIMIT);
+    fillSortedCards(randomizedCards);
   }
   else if (filter === 'filter-discussed') {
     const discussedCards = cards.slice().sort(getSort);
-    clearPhotoCard();
-    createPhotoCard(discussedCards);
-    createBigPhotoModalFrame(discussedCards);
+    fillSortedCards(discussedCards);
   }}
 
 const onSortButtonClick = debounce(postSorting);
