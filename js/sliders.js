@@ -118,7 +118,7 @@ function setActionOnButtonControl() {
     if (currentValue > MIN_SCALE && currentValue <= MAX_SCALE) {
       currentValue -= SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
-      imagePreview.style.transform = `scale(${currentValue}%)`;
+      innerImage.style.transform = `scale(${currentValue}%)`;
     }
   });
   uploadScale.querySelector('.scale__control--bigger').addEventListener('click', ()=> {
@@ -126,7 +126,7 @@ function setActionOnButtonControl() {
     if (currentValue >= MIN_SCALE && currentValue < MAX_SCALE) {
       currentValue += SCALE_STEP;
       uploadValue.value = `${currentValue}%`;
-      imagePreview.style.transform = `scale(${currentValue}%)`;
+      innerImage.style.transform = `scale(${currentValue}%)`;
     }
   });
 }
