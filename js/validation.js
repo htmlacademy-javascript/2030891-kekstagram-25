@@ -117,6 +117,7 @@ function validateHashTags (value) {
   {
     return true;
   }
+  value = value.replace(/\s+/g, ' ').trim();
   let hashTags = value.split(' ');
   hashTags = hashTags.map((element) => element.toLowerCase());
   const regularExpression = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
@@ -134,6 +135,7 @@ function validateHashTags (value) {
 }
 
 function getHashTagsErrorMessage (value) {
+  value = value.replace(/\s+/g, ' ').trim();
   let hashTags = value.split(' ');
   hashTags = hashTags.map((element) => element.toLowerCase());
   const regularExpression = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
