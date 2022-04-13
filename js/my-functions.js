@@ -8,8 +8,6 @@ function checkLengthString(checkString, maxStringLength){
   return checkString.length <= maxStringLength;
 }
 
-const getRandomArrayElement = (elements) => elements[getRandomNumber(0, elements.length - 1)];
-
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
 const ALERT_SHOW_TIME = 5000;
@@ -30,4 +28,4 @@ function debounce (callback, timeoutDelay = 500) {
   };
 }
 
-export {getRandomArrayElement,checkLengthString,getRandomNumber,isEscapeKey,showAlert,debounce};
+export {checkLengthString,getRandomNumber,isEscapeKey,showAlert,debounce};
