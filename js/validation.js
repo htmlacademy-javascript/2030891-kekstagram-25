@@ -41,49 +41,13 @@ const pristine = new Pristine(uploadPhotoForm, {
   errorTextClass: 'img-upload__error'
 });
 
-const initFormButtonSubmit = (onSuccess) => {
-  uploadPhotoForm.addEventListener('submit', (evt) => {
-    evt.preventDefault();
-    if (pristine.validate()) {
-      blockSubmitButton();
-      sendData(
-        () => {
-          onSuccess();
-          unblockSubmitButton();
-          showInfoMessage('success');
-        },
-        () => {
-          unblockSubmitButton();
-          showInfoMessage('error');
-          onCloseForm();
-        },
-        new FormData(evt.target),
-      );
-    }
-  });
+const onInputElementEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.stopPropagation();
+  }
 };
 
-function uploadPreview(image) {
-  const preview = document.querySelector('.img-upload__preview img');
-  const file = image.files[0];
-  const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-  if (matches) {
-    preview.src = URL.createObjectURL(file);
-  }
-}
-
-function onOpenForm() {
-  overlayForm.classList.remove('hidden');
-  document.body.classList.add('modal-open');
-  uploadPreview(this);
-  closeFormButton.addEventListener('click', onCloseForm);
-  formHashTagsInput.addEventListener('keydown', onInputElementEscKeydown);
-  formDescriptionInput.addEventListener('keydown', onInputElementEscKeydown);
-  document.addEventListener('keydown', onInfoMessageFormEscKeydown);
-}
-
-function onCloseForm() {
+const onCloseForm = () => {
   overlayForm.classList.add('hidden');
   document.body.classList.remove('modal-open');
   uploadPhotoForm.reset();
@@ -95,12 +59,26 @@ function onCloseForm() {
   formHashTagsInput.removeEventListener('keydown', onInputElementEscKeydown);
   formDescriptionInput.removeEventListener('keydown', onInputElementEscKeydown);
   document.removeEventListener('keydown', onInfoMessageFormEscKeydown);
-}
+};
 
-function onInputElementEscKeydown(evt) {
-  if (isEscapeKey(evt)) {
-    evt.stopPropagation();
+const uploadPreview = (image) => {
+  const preview = document.querySelector('.img-upload__preview img');
+  const file = image.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    preview.src = URL.createObjectURL(file);
   }
+};
+
+function onOpenForm() {
+  overlayForm.classList.remove('hidden');
+  document.body.classList.add('modal-open');
+  uploadPreview(this);
+  closeFormButton.addEventListener('click', onCloseForm);
+  formHashTagsInput.addEventListener('keydown', onInputElementEscKeydown);
+  formDescriptionInput.addEventListener('keydown', onInputElementEscKeydown);
+  document.addEventListener('keydown', onInfoMessageFormEscKeydown);
 }
 
 function onInfoMessageFormEscKeydown(evt) {
@@ -109,16 +87,13 @@ function onInfoMessageFormEscKeydown(evt) {
   }
 }
 
-function initPhotoFormOpenAndClose()
-{
+const initPhotoFormOpenAndClose = () => {
   uploadPhoto.addEventListener('change', onOpenForm);
-}
+};
 
-function validateComment (value) {
-  return checkLengthString(value, MAX_COMMENT_LENGTH);
-}
+const validateComment = (value) => checkLengthString(value, MAX_COMMENT_LENGTH);
 
-function validateHashTags (value) {
+const validateHashTags = (value) => {
   if(value.length === 0)
   {
     return true;
@@ -138,9 +113,9 @@ function validateHashTags (value) {
   }
   const hashTagsWithoutDuplicates = [...new Set(hashTags)];
   return hashTags.length === hashTagsWithoutDuplicates.length;
-}
+};
 
-function getHashTagsErrorMessage (value) {
+const getHashTagsErrorMessage = (value) => {
   value = value.replace(/\s+/g, ' ').trim();
   let hashTags = value.split(' ');
   hashTags = hashTags.map((element) => element.toLowerCase());
@@ -170,9 +145,9 @@ function getHashTagsErrorMessage (value) {
   {
     return 'Нельзя использовать несколько одинаковых хэштегов!';
   }
-}
+};
 
-function initPhotoFormValidation() {
+const initPhotoFormValidation = () => {
   pristine.addValidator(
     formDescriptionInput,
     validateComment,
@@ -184,16 +159,18 @@ function initPhotoFormValidation() {
     validateHashTags,
     getHashTagsErrorMessage
   );
-}
+};
 
 const onInfoMessageSuccessClickButton = () => {
   closeSuccessInfoMessage();
 };
+
 const onInfoMessageSuccessEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     closeSuccessInfoMessage();
   }
 };
+
 const onInfoMessageSuccessClickOutside = (evt) => {
   const withinBoundaries = evt.composedPath().includes(messageWrapperSuccess);
   if (!withinBoundaries) {
@@ -204,11 +181,13 @@ const onInfoMessageSuccessClickOutside = (evt) => {
 const onInfoMessageErrorClickButton = () => {
   closeErrorInfoMessage();
 };
+
 const onInfoMessageErrorEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     closeErrorInfoMessage();
   }
 };
+
 const onInfoMessageErrorClickOutside = (evt) => {
   const withinBoundaries = evt.composedPath().includes(messageWrapperError);
   if (!withinBoundaries) {
@@ -216,7 +195,21 @@ const onInfoMessageErrorClickOutside = (evt) => {
   }
 };
 
-function showInfoMessage(type) {
+const showSuccessInfoMessage = () => {
+  buttonSuccess.addEventListener('click', onInfoMessageSuccessClickButton);
+  document.addEventListener('keydown', onInfoMessageSuccessEscKeydown);
+  document.addEventListener('click', onInfoMessageSuccessClickOutside);
+  document.body.appendChild(messageSuccess);
+};
+
+const showErrorInfoMessage = () => {
+  buttonError.addEventListener('click', onInfoMessageErrorClickButton);
+  document.addEventListener('keydown', onInfoMessageErrorEscKeydown);
+  document.addEventListener('click', onInfoMessageErrorClickOutside);
+  document.body.appendChild(messageError);
+};
+
+const showInfoMessage = (type) => {
   if(type === 'success')
   {
     showSuccessInfoMessage();
@@ -225,38 +218,42 @@ function showInfoMessage(type) {
   {
     showErrorInfoMessage();
   }
-}
+};
 
-function showSuccessInfoMessage()
-{
-  buttonSuccess.addEventListener('click', onInfoMessageSuccessClickButton);
-  document.addEventListener('keydown', onInfoMessageSuccessEscKeydown);
-  document.addEventListener('click', onInfoMessageSuccessClickOutside);
-  document.body.appendChild(messageSuccess);
-}
-
-function showErrorInfoMessage()
-{
-  buttonError.addEventListener('click', onInfoMessageErrorClickButton);
-  document.addEventListener('keydown', onInfoMessageErrorEscKeydown);
-  document.addEventListener('click', onInfoMessageErrorClickOutside);
-  document.body.appendChild(messageError);
-}
-
-function closeSuccessInfoMessage()
-{
+function closeSuccessInfoMessage() {
   buttonSuccess.removeEventListener('click', onInfoMessageSuccessClickButton);
   document.removeEventListener('keydown', onInfoMessageSuccessEscKeydown);
   document.removeEventListener('click', onInfoMessageSuccessClickOutside);
   messageSuccess.remove();
 }
 
-function closeErrorInfoMessage()
-{
+function closeErrorInfoMessage() {
   buttonSuccess.removeEventListener('click', onInfoMessageErrorClickButton);
   document.removeEventListener('keydown', onInfoMessageErrorEscKeydown);
   document.removeEventListener('click', onInfoMessageErrorClickOutside);
   messageError.remove();
 }
+
+const initFormButtonSubmit = (onSuccess) => {
+  uploadPhotoForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      blockSubmitButton();
+      sendData(
+        () => {
+          onSuccess();
+          unblockSubmitButton();
+          showInfoMessage('success');
+        },
+        () => {
+          unblockSubmitButton();
+          showInfoMessage('error');
+          onCloseForm();
+        },
+        new FormData(evt.target),
+      );
+    }
+  });
+};
 
 export {initPhotoFormOpenAndClose,initPhotoFormValidation,initFormButtonSubmit,onCloseForm};

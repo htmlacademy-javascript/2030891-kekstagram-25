@@ -76,13 +76,13 @@ const sliderWrapper = document.querySelector('.img-upload__effect-level');
 let currentEffect = 'none';
 const valueElement = document.querySelector('.effect-level__value');
 
-function clearEffects() {
+const clearEffects = () => {
   sliderWrapper.classList.remove('active');
   innerImage.className = 'effects__preview--none';
   innerImage.style.filter = '';
-}
+};
 
-function initSlider() {
+const initSlider = () => {
   const sliderElement = document.querySelector('.effect-level__slider');
   const listEffects = document.querySelector('.img-upload__effects');
 
@@ -110,9 +110,9 @@ function initSlider() {
       sliderWrapper.classList.add('active');
     }
   });
-}
+};
 
-function setActionOnButtonControl() {
+const setActionOnButtonControl = () => {
   uploadScale.querySelector('.scale__control--smaller').addEventListener('click', ()=> {
     let currentValue = parseInt(uploadValue.value, RADIX_DECIMAL);
     if (currentValue > MIN_SCALE && currentValue <= MAX_SCALE) {
@@ -129,6 +129,6 @@ function setActionOnButtonControl() {
       innerImage.style.transform = `scale(${currentValue}%)`;
     }
   });
-}
+};
 
 export {setActionOnButtonControl,initSlider,clearEffects};

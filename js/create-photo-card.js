@@ -2,7 +2,7 @@ const usersListPhotoCards = document.querySelector('.pictures');
 const photoCardTemplate = document.querySelector('#picture').content;
 const miniatures = document.createDocumentFragment();
 
-function createPhotoCard(cards) {
+const createPhotoCard = (cards) => {
   cards.forEach(({ url, likes, comments }, index) => {
     const card = photoCardTemplate.cloneNode(true);
     card.querySelector('.picture__img').src = url;
@@ -12,6 +12,6 @@ function createPhotoCard(cards) {
     miniatures.append(card);
   });
   usersListPhotoCards.append(miniatures);
-}
+};
 
 export {createPhotoCard};

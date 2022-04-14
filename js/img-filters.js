@@ -6,27 +6,23 @@ const RANDOM_PHOTO_CARDS_LIMIT = 10;
 
 const filterSection = document.querySelector('.img-filters');
 
-function getSort(a, b) {
-  return b.comments.length - a.comments.length;
-}
+const getSort = (a, b) => b.comments.length - a.comments.length;
 
-function clearPhotoCard() {
+const clearPhotoCard = () => {
   document.querySelectorAll('.picture').forEach((picture) => {
     picture.remove();
   });
-}
+};
 
-function getRandomCards() {
-  return getRandomNumber(-25, 25);
-}
+const getRandomCards = () => getRandomNumber(-25, 25);
 
-function fillSortedCards(cards) {
+const fillSortedCards = (cards) => {
   clearPhotoCard();
   createPhotoCard(cards);
   createBigPhotoModalFrame(cards);
-}
+};
 
-function postSorting(cards, filter) {
+const postSorting = (cards, filter) => {
   if (filter === 'filter-default') {
     fillSortedCards(cards);
   }
@@ -37,11 +33,12 @@ function postSorting(cards, filter) {
   else if (filter === 'filter-discussed') {
     const discussedCards = cards.slice().sort(getSort);
     fillSortedCards(discussedCards);
-  }}
+  }
+};
 
 const onSortButtonClick = debounce(postSorting);
 
-function filterImages(cards) {
+const filterImages = (cards) => {
   const filterForm = filterSection.querySelector('.img-filters__form');
   filterSection.classList.remove('img-filters--inactive');
   filterForm.addEventListener('click', (evt) => {
@@ -49,6 +46,6 @@ function filterImages(cards) {
     evt.target.classList.add('img-filters__button--active');
     onSortButtonClick(cards, evt.target.id);
   });
-}
+};
 
 export {filterImages};

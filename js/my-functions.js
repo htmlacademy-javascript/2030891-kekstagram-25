@@ -1,12 +1,10 @@
-function getRandomNumber(min, max){
+const getRandomNumber = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-}
+};
 
-function checkLengthString(checkString, maxStringLength){
-  return checkString.length <= maxStringLength;
-}
+const checkLengthString = (checkString, maxStringLength) => checkString.length <= maxStringLength;
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
@@ -20,12 +18,12 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-function debounce (callback, timeoutDelay = 500) {
+const debounce = (callback, timeoutDelay = 500) => {
   let timeoutId;
   return (...rest) => {
     clearTimeout(timeoutId);
     timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
   };
-}
+};
 
 export {checkLengthString,getRandomNumber,isEscapeKey,showAlert,debounce};
