@@ -15,6 +15,12 @@ const effectNoneRadio = document.getElementById('effect-none');
 const closeFormButton = document.querySelector('.img-upload__cancel');
 const formHashTagsInput = uploadPhotoForm.querySelector('.text__hashtags');
 const formDescriptionInput = uploadPhotoForm.querySelector('.text__description');
+const messageSuccess = document.querySelector('#success').content.querySelector('.success').cloneNode(true);
+const messageWrapperSuccess = messageSuccess.querySelector('.success__inner');
+const buttonSuccess = messageWrapperSuccess.querySelector('.success__button');
+const messageError = document.querySelector('#error').content.querySelector('.error').cloneNode(true);
+const messageWrapperError = messageError.querySelector('.error__inner');
+const buttonError = messageWrapperError.querySelector('.error__button');
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -180,25 +186,77 @@ function initPhotoFormValidation() {
   );
 }
 
+const onInfoMessageSuccessClickButton = () => {
+  closeSuccessInfoMessage();
+};
+const onInfoMessageSuccessEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    closeSuccessInfoMessage();
+  }
+};
+const onInfoMessageSuccessClickOutside = (evt) => {
+  const withinBoundaries = evt.composedPath().includes(messageWrapperSuccess);
+  if (!withinBoundaries) {
+    closeSuccessInfoMessage();
+  }
+};
+
+const onInfoMessageErrorClickButton = () => {
+  closeErrorInfoMessage();
+};
+const onInfoMessageErrorEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    closeErrorInfoMessage();
+  }
+};
+const onInfoMessageErrorClickOutside = (evt) => {
+  const withinBoundaries = evt.composedPath().includes(messageWrapperError);
+  if (!withinBoundaries) {
+    closeErrorInfoMessage();
+  }
+};
+
 function showInfoMessage(type) {
-  const message = document.querySelector(`#${type}`).content.querySelector(`.${type}`).cloneNode(true);
-  const messageWrapper = message.querySelector(`.${type}__inner`);
-  const button = messageWrapper.querySelector(`.${type}__button`);
-  button.addEventListener('click', () => {
-    message.remove();
-  });
-  document.addEventListener('keydown', (evt) => {
-    if (isEscapeKey(evt)) {
-      message.remove();
-    }
-  });
-  document.addEventListener('click', (evt) => {
-    const withinBoundaries = evt.composedPath().includes(messageWrapper);
-    if (!withinBoundaries) {
-      message.remove();
-    }
-  });
-  document.body.appendChild(message);
+  if(type === 'success')
+  {
+    showSuccessInfoMessage();
+  }
+  else if(type === 'error')
+  {
+    showErrorInfoMessage();
+  }
+}
+
+function showSuccessInfoMessage()
+{
+  buttonSuccess.addEventListener('click', onInfoMessageSuccessClickButton);
+  document.addEventListener('keydown', onInfoMessageSuccessEscKeydown);
+  document.addEventListener('click', onInfoMessageSuccessClickOutside);
+  document.body.appendChild(messageSuccess);
+}
+
+function showErrorInfoMessage()
+{
+  buttonError.addEventListener('click', onInfoMessageErrorClickButton);
+  document.addEventListener('keydown', onInfoMessageErrorEscKeydown);
+  document.addEventListener('click', onInfoMessageErrorClickOutside);
+  document.body.appendChild(messageError);
+}
+
+function closeSuccessInfoMessage()
+{
+  buttonSuccess.removeEventListener('click', onInfoMessageSuccessClickButton);
+  document.removeEventListener('keydown', onInfoMessageSuccessEscKeydown);
+  document.removeEventListener('click', onInfoMessageSuccessClickOutside);
+  messageSuccess.remove();
+}
+
+function closeErrorInfoMessage()
+{
+  buttonSuccess.removeEventListener('click', onInfoMessageErrorClickButton);
+  document.removeEventListener('keydown', onInfoMessageErrorEscKeydown);
+  document.removeEventListener('click', onInfoMessageErrorClickOutside);
+  messageError.remove();
 }
 
 export {initPhotoFormOpenAndClose,initPhotoFormValidation,initFormButtonSubmit,onCloseForm};

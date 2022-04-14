@@ -29,9 +29,23 @@ function fillCommentsBlock () {
   filledComments.textContent = lastFilledComments;
 }
 
+const onPhotoCardEscKeydown = (evt) => {
+  if(isEscapeKey(evt)) {
+    cardPhotoModal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+};
+
+const onPhotoCardClickCancel = () => {
+  cardPhotoModal.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+};
+
 function resetBigPicture() {
   commentsLoader.classList.remove('hidden');
   lastFilledComments = 0;
+  closePhotoModal.removeEventListener('click', onPhotoCardClickCancel);
+  document.removeEventListener('keydown', onPhotoCardEscKeydown);
 }
 
 function onLoadMoreButtonClick() {
@@ -47,16 +61,8 @@ function fillPhotoCardModal (card) {
   commentsList.innerHTML = '';
   fillCommentsBlock();
   cardPhotoModal.classList.remove('hidden');
-  closePhotoModal.addEventListener('click', () =>{
-    cardPhotoModal.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  });
-  document.addEventListener('keydown', (evt) =>{
-    if(isEscapeKey(evt)) {
-      cardPhotoModal.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-    }
-  });
+  closePhotoModal.addEventListener('click', onPhotoCardClickCancel);
+  document.addEventListener('keydown', onPhotoCardEscKeydown);
   commentsLoader.addEventListener('click', onLoadMoreButtonClick);
 }
 
