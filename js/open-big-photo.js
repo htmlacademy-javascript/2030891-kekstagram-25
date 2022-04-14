@@ -11,7 +11,7 @@ const commentsList = cardPhotoModal.querySelector('.social__comments');
 let postComments = [];
 let lastFilledComments = 0;
 
-function fillCommentsBlock () {
+const fillCommentsBlock = () => {
   const partedComments = postComments.slice(lastFilledComments,lastFilledComments+5);
   const filledComments = document.querySelector('.comments-filled');
   partedComments.forEach((commentData) => {
@@ -27,18 +27,32 @@ function fillCommentsBlock () {
     commentsLoader.classList.add('hidden');
   }
   filledComments.textContent = lastFilledComments;
-}
+};
 
-function resetBigPicture() {
+const onPhotoCardEscKeydown = (evt) => {
+  if(isEscapeKey(evt)) {
+    cardPhotoModal.classList.add('hidden');
+    document.body.classList.remove('modal-open');
+  }
+};
+
+const onPhotoCardClickCancel = () => {
+  cardPhotoModal.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+};
+
+const resetBigPicture = () => {
   commentsLoader.classList.remove('hidden');
   lastFilledComments = 0;
-}
+  closePhotoModal.removeEventListener('click', onPhotoCardClickCancel);
+  document.removeEventListener('keydown', onPhotoCardEscKeydown);
+};
 
-function onLoadMoreButtonClick() {
+const onLoadMoreButtonClick = () => {
   fillCommentsBlock();
-}
+};
 
-function fillPhotoCardModal (card) {
+const fillPhotoCardModal = (card) => {
   resetBigPicture();
   cardPhotoModalImage.src = card.url;
   likesCount.textContent = card.likes;
@@ -47,20 +61,12 @@ function fillPhotoCardModal (card) {
   commentsList.innerHTML = '';
   fillCommentsBlock();
   cardPhotoModal.classList.remove('hidden');
-  closePhotoModal.addEventListener('click', () =>{
-    cardPhotoModal.classList.add('hidden');
-    document.body.classList.remove('modal-open');
-  });
-  document.addEventListener('keydown', (evt) =>{
-    if(isEscapeKey(evt)) {
-      cardPhotoModal.classList.add('hidden');
-      document.body.classList.remove('modal-open');
-    }
-  });
+  closePhotoModal.addEventListener('click', onPhotoCardClickCancel);
+  document.addEventListener('keydown', onPhotoCardEscKeydown);
   commentsLoader.addEventListener('click', onLoadMoreButtonClick);
-}
+};
 
-function createBigPhotoModalFrame(cards) {
+const createBigPhotoModalFrame = (cards) => {
   const photoCard = document.querySelectorAll('.picture');
   for(let i = 0; i < photoCard.length; i++){
     photoCard[i].addEventListener('click', (evt) => {
@@ -69,6 +75,6 @@ function createBigPhotoModalFrame(cards) {
       document.body.classList.add('modal-open');
     });
   }
-}
+};
 
 export {createBigPhotoModalFrame};
